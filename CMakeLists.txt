@@ -35,6 +35,12 @@ target_include_directories(F2NetworkSwitch PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/r
 
 target_link_libraries(F2NetworkSwitch PRIVATE user32 shell32 gdi32 comctl32 winmm)
 
+# resources/app.rc already embeds our application manifest as resource ID 1.
+# Disable MSVC's generated manifest to avoid CVT1100 duplicate MANIFEST errors.
+if (MSVC)
+    target_link_options(F2NetworkSwitch PRIVATE /MANIFEST:NO)
+endif()
+
 # Runtime code loads these files from <exe directory>/lib.
 add_custom_command(TARGET F2NetworkSwitch POST_BUILD
     COMMAND ${CMAKE_COMMAND} -E make_directory "$<TARGET_FILE_DIR:F2NetworkSwitch>/lib"
