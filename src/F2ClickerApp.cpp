@@ -142,11 +142,13 @@ void F2ClickerApp::CreateControls() {
     CreateLabel(main_window_, L"点击键：", 24, 58, 90, 24);
     combo_click_ = CreateWindowExW(0, L"COMBOBOX", nullptr,
         WS_CHILD | WS_VISIBLE | CBS_DROPDOWNLIST | WS_VSCROLL,
-        105, 54, 130, 250, main_window_, reinterpret_cast<HMENU>(kComboClick), instance_, nullptr);
+        105, 54, 130, 250, main_window_,
+        reinterpret_cast<HMENU>(static_cast<intptr_t>(kComboClick)), instance_, nullptr);
     CreateLabel(main_window_, L"快速键：", 265, 58, 90, 24);
     combo_quick_ = CreateWindowExW(0, L"COMBOBOX", nullptr,
         WS_CHILD | WS_VISIBLE | CBS_DROPDOWNLIST | WS_VSCROLL,
-        346, 54, 130, 250, main_window_, reinterpret_cast<HMENU>(kComboQuick), instance_, nullptr);
+        346, 54, 130, 250, main_window_,
+        reinterpret_cast<HMENU>(static_cast<intptr_t>(kComboQuick)), instance_, nullptr);
     CreateButton(main_window_, L"应用热键", kButtonApply, 480, 53, 66, 27);
 
     label_coord_ = CreateLabel(main_window_, L"绑定坐标：未绑定", 24, 105, 510, 24);
