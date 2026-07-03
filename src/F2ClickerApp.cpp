@@ -158,7 +158,7 @@ void F2ClickerApp::CreateControls() {
     label_handle_ = CreateLabel(main_window_, L"窗口句柄：未绑定", 24, 137, 510, 24);
     label_title_ = CreateLabel(main_window_, L"窗口标题：未绑定", 24, 169, 510, 24);
     label_info_ = CreateLabel(main_window_, L"状态：", 24, 201, 510, 42);
-    CreateLabel(main_window_, L"点击键：绑定 / 开始计时 / 结束并点击；快速键：0.5 秒后点击", 24, 250, 510, 24);
+    CreateLabel(main_window_, L"点击键：绑定 / 计时；快速键：传递给前台并在 0.5 秒后点击", 24, 250, 510, 24);
     CreateLabel(main_window_, L"后台点击模式：已固定启用（不会移动真实鼠标）", 24, 282, 350, 26);
     CreateButton(main_window_, L"重置绑定", kButtonReset, 356, 325, 90, 30);
     CreateButton(main_window_, L"退出", kButtonExit, 456, 325, 90, 30);
