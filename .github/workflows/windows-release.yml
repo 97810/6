@@ -1,0 +1,48 @@
+name: Build Windows Release
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+      - master
+
+jobs:
+  build-windows:
+    name: Build and package Windows exe
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
+
+      - name: Configure CMake
+        shell: pwsh
+        run: cmake -S . -B build -A x64
+
+      - name: Build Release package target
+        shell: pwsh
+        run: cmake --build build --config Release --target package_release
+
+      - name: Verify delivery files
+        shell: pwsh
+        run: |
+          $dist = "build/dist/F2一键断网_v1.0"
+          if (!(Test-Path "$dist/F2一键断网.exe")) { throw "Missing exe: $dist/F2一键断网.exe" }
+          if (!(Test-Path "$dist/lib/start.mp3")) { throw "Missing audio: $dist/lib/start.mp3" }
+          if (!(Test-Path "$dist/lib/end.mp3")) { throw "Missing audio: $dist/lib/end.mp3" }
+          if (!(Test-Path "$dist/使用说明.txt")) { throw "Missing usage guide: $dist/使用说明.txt" }
+          Get-ChildItem -Recurse $dist | Select-Object FullName, Length
+
+      - name: Create zip package
+        shell: pwsh
+        run: |
+          $dist = "build/dist/F2一键断网_v1.0"
+          Compress-Archive -Path $dist -DestinationPath "F2_NetworkSwitch_v1.0.zip" -Force
+
+      - name: Upload release artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: F2_NetworkSwitch_v1.0
+          path: F2_NetworkSwitch_v1.0.zip
+          if-no-files-found: error
