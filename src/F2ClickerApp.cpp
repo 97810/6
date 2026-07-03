@@ -81,6 +81,9 @@ LRESULT CALLBACK F2ClickerApp::StaticWindowProc(HWND hwnd, UINT message, WPARAM 
 LRESULT F2ClickerApp::WindowProc(HWND hwnd, UINT message, WPARAM wparam, LPARAM lparam) {
     switch (message) {
     case WM_CREATE: {
+        // CreateWindowExW sends WM_CREATE before it returns, so the assignment
+        // in CreateMainWindow() has not populated main_window_ yet.
+        main_window_ = hwnd;
         CreateControls();
         hotkeys_.SetWindow(hwnd);
         timer_overlay_.Initialize();
